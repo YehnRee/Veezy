@@ -3,12 +3,12 @@ import { Card } from 'react-bootstrap'
 
 function Creator({creator}) {
     return (
-        <Card className='my-3 p-3 rounded' style={{ height: '400px' }}>
+        <Card className='my-3 p-3 rounded'>
             <a href={`/creator/${creator._id}`}>
                 <Card.Img variant="top" src={creator.image} style={{ height: '100%', objectFit: 'cover' }} />
             </a>
 
-            <Card.Body className="d-flex flex-column" style={{ overflow: 'hidden' }}>
+            <Card.Body>
                 <a href={`/creator/${creator._id}`}>
                     <Card.Title as="div">
                         <strong>{creator.name}</strong>

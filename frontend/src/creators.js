@@ -1,45 +1,45 @@
 const creators = [
     {
       '_id': '1',
-      'name': 'SMF ( Jami UwU )',
-      'image': '/images/jami.jpg',
+      'name': 'Video 1',
+      'image': '/images/jjk.jpg',
       'description':
-        'Creating Reactions, Reviews, + COSPLAY!!',
+        'Video description',
     },
     {
       '_id': '2',
-      'name': 'Brozime',
-      'image': '/images/brozime.jpg',
+      'name': 'Video 2',
+      'image': '/images/jjk.jpg',
       'description':
-        'creating Warframe Twitch/YouTube Content and More!',
+        'Video description',
     },
     {
       '_id': '3',
-      'name': 'Steve Mould',
-      'image': '/images/stevemould.jpg',
+      'name': 'Video 3',
+      'image': '/images/jjk.jpg',
       'description':
-        'Creating Science videos',
+        'Video description',
     },
     {
       '_id': '4',
-      'name': 'Ki Moments',
-      'image': '/images/kimoments.jpg',
+      'name': 'Video 4',
+      'image': '/images/jjk.jpg',
       'description':
-        'An Anime Podcast hosted by DotoDoya & Nanogenix',
+        'Video description',
     },
     {
       '_id': '5',
-      'name': 'Heisuten Reacts',
-      'image': '/images/heisuten.jpg',
+      'name': 'Video 5',
+      'image': '/images/jjk.jpg',
       'description':
-        'reacting to anime fr',
+        'Video description',
     },
     {
       '_id': '6',
-      'name': 'Vetex',
-      'image': '/images/vetex.jpg',
+      'name': 'Video 6',
+      'image': '/images/jjk.jpg',
       'description':
-        'Creating Arcane Odyssey',
+        'Video description',
     },
   ]
   
