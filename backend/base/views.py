@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from base.videos import videos
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -27,7 +26,6 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getVideos(request):
-    from base.videos import videos
     return Response(videos)
 
 @api_view(['GET'])

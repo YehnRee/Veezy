@@ -7,11 +7,11 @@ import axios from 'axios'
 function VideoScreen() {
     const { id } = useParams()
 
-    const [[video], setVideo] = useState([])
+    const [video, setVideo] = useState([])
 
     useEffect(() => {
         async function fetchVideo() {
-            const {data} = await axios.get(`http://127.0.0.1:8000/videos/${id}/`)
+            const {data} = await axios.get(`/videos/${id}/`)
             setVideo(data)
         }
         fetchVideo()
