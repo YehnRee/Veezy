@@ -27,6 +27,8 @@ function VideoScreen() {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3>{video.name}</h3>
+              {' by '}
+              {video.user}
             </ListGroup.Item>
             <ListGroup.Item>{video.description}</ListGroup.Item>
           </ListGroup>

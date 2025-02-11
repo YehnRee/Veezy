@@ -2,6 +2,7 @@ from django.shortcuts import render
 from base.videos import videos
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .models import *
 
 # Create your views here.
 
@@ -26,13 +27,14 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getVideos(request):
-    return Response(videos)
+    from .serializers import VideoSerializer
+    videos = Video.objects.all()
+    serializers = VideoSerializer(videos, many=True)
+    return Response(serializers.data)
 
 @api_view(['GET'])
 def getVideo(request, pk):
-    video = None
-    for i in videos:
-        if i['_id'] == pk:
-            video = i
-            break
-    return Response(video)
+    from .serializers import VideoSerializer
+    video = Video.objects.get(_id=pk)
+    serializer = VideoSerializer(video, many=False)
+    return Response(serializer.data)
