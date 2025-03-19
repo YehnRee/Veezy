@@ -29,7 +29,7 @@ function Header() {
             className={`navbar-transition ${showNavbar ? "navbar-visible" : "navbar-hidden"}`}
         >
             <Container>
-                <Navbar.Brand href="/home">
+                <Navbar.Brand href="/">
                     <i className="fa-solid fa-play"></i> Veezy
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

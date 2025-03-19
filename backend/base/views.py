@@ -29,12 +29,12 @@ def getRoutes(request):
 def getVideos(request):
     from .serializers import VideoSerializer
     videos = Video.objects.all()
-    serializers = VideoSerializer(videos, many=True)
+    serializers = VideoSerializer(videos, many=True, context={'request': request})  # ✅ Pass request context
     return Response(serializers.data)
 
 @api_view(['GET'])
 def getVideo(request, pk):
     from .serializers import VideoSerializer
     video = Video.objects.get(_id=pk)
-    serializer = VideoSerializer(video, many=False)
+    serializer = VideoSerializer(video, many=False, context={'request': request})  # ✅ Pass request context
     return Response(serializer.data)
