@@ -5,6 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 class VideoSerializer(serializers.ModelSerializer):
     vid = serializers.SerializerMethodField()
+    user = serializers.StringRelatedField()
 
     def get_vid(self, obj):
         request = self.context.get("request")

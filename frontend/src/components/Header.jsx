@@ -1,10 +1,21 @@
 import React from 'react'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
+import { logout } from '../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 function Header() {
-        const [showNavbar, setShowNavbar] = useState(true);
+    const [showNavbar, setShowNavbar] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+    const dispatch = useDispatch();
+
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -29,33 +40,36 @@ function Header() {
             className={`navbar-transition ${showNavbar ? "navbar-visible" : "navbar-hidden"} position-relative`}
         >
             <Container>
-                <Navbar.Brand href="/">
+                <Navbar.Brand as={Link} to="/">
                     <i className="fa-solid fa-play"></i> Veezy
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/cart">
+                        <Nav.Link as={Link} to="/cart">
                             <i className="fas fa-shopping-cart"></i> Browse
                         </Nav.Link>
-                        <Nav.Link href="/user">
+                        <Nav.Link as={Link} to="/user">
                             <i className="fa-solid fa-dollar-sign"></i> Subscription
                         </Nav.Link>
-                        <NavDropdown title={<i className="fa-solid fa-ellipsis"></i>} id="basic-nav-dropdown" align="end">
-                            <NavDropdown.Item href="#action/3.1">
-                                <i className="fas fa-user"></i> Account
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                <i className="fas fa-cog"></i> Settings
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">
-                                <i className="fa-solid fa-question"></i> About us
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                <i className="fas fa-sign-out"></i> Logout
-                            </NavDropdown.Item>
-                        </NavDropdown>
+
+                        {userInfo ? (
+                            <NavDropdown title={userInfo.name} id="username" align="end">
+                                <Nav.Link as={Link} to="/profile">
+                                    <NavDropdown.Item>
+                                        <i className="fas fa-user"></i> Account
+                                    </NavDropdown.Item>
+                                </Nav.Link>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={logoutHandler}>
+                                    <i className="fas fa-sign-out"></i> Logout
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                        ) : (
+                            <Nav.Link as={Link} to="/login">
+                                <i className='fas fa-user'></i> Login
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -63,4 +77,4 @@ function Header() {
     );
 }
 
-export default Header
+export default Header;

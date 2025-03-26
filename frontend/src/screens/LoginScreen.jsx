@@ -23,10 +23,10 @@ function LoginScreen() {
         if (userInfo) {
             navigate(redirect)
         }
-    }, [navigate, userInfo, redirect])
+    }, [navigate, dispatch, userInfo, redirect])
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log('Submitted')
+        dispatch(login(email, password))
     }
 
     return (

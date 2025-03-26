@@ -5,6 +5,7 @@ import HomeScreen from "./screens/HomeScreen";
 import VideoScreen from "./screens/VideoScreen";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path='/' element={<HomeScreen />} exact />
             <Route path='/login' element={<LoginScreen />} />
             <Route path='/videos/:id' element={<VideoScreen />} />
+            <Route path='/register' element={<RegisterScreen />} />
           </Routes>
         </Container>
       </main>
