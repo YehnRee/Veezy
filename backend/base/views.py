@@ -3,13 +3,14 @@ from base.videos import videos
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import *
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import *
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+from django.shortcuts import get_object_or_404
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 
@@ -43,17 +44,6 @@ def getVideo(request, pk):
     video = Video.objects.get(_id=pk)
     serializer = VideoSerializer(video, many=False, context={'request': request})  # ✅ Pass request context
     return Response(serializer.data)
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-
-        serializer = UserSerializerWithToken(self.user).data
-
-        for k, v in serializer.items():
-            data[k] = v
-
-        return data
     
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -87,3 +77,34 @@ def registerUser(request):
     except:
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getUserProfile(request):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+    user = request.user
+    serializer = UserSerializerWithToken(user, many=False)
+    data = request.data
+    user.first_name = data['name']
+    user.username = data['username']
+    user.email = data['email']
+    
+    if data['password'] != '':
+        user.password = make_password(data['password'])
+    user.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def uploadVideo(request):
+    serializer = VideoSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)  # Assuming user is authenticated
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

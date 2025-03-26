@@ -1,12 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { thunk } from 'redux-thunk'
 import { videoListReducer } from './reducers/videoReducers'
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers'
+import { userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer } from './reducers/userReducers'
 
 const reducer = combineReducers({
     videoList: videoListReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
+    userUpdateProfile: userUpdateProfileReducer,
+    userDetails: userDetailsReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?

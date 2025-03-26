@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { logout } from '../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap';
 
 function Header() {
     const [showNavbar, setShowNavbar] = useState(true);
@@ -46,20 +47,20 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/cart">
-                            <i className="fas fa-shopping-cart"></i> Browse
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/user">
+                        <Nav.Link as={Link} to="/subscription">
                             <i className="fa-solid fa-dollar-sign"></i> Subscription
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/upload-video">
+                            <i className="fa-solid fa-play"></i> Upload
                         </Nav.Link>
 
                         {userInfo ? (
                             <NavDropdown title={userInfo.name} id="username" align="end">
-                                <Nav.Link as={Link} to="/profile">
-                                    <NavDropdown.Item>
+
+                                    <NavDropdown.Item href='/profile'>
                                         <i className="fas fa-user"></i> Account
                                     </NavDropdown.Item>
-                                </Nav.Link>
+
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item onClick={logoutHandler}>
                                     <i className="fas fa-sign-out"></i> Logout

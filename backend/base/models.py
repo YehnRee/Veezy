@@ -32,7 +32,7 @@ class Video(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
-    vid = models.FileField(upload_to=upload_vid_path, null=True, blank=False)
+    vid = models.FileField(upload_to=upload_vid_path, null=True, blank=False,)
     description = models.TextField(null=True, blank=True)
     _id = models.AutoField(primary_key=True)
     createdAt = models.DateTimeField(auto_now_add=True)

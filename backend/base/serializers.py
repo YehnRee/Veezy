@@ -2,17 +2,36 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Video
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class VideoSerializer(serializers.ModelSerializer):
     vid = serializers.SerializerMethodField()
     user = serializers.StringRelatedField()
+    image = serializers.SerializerMethodField()
 
     def get_vid(self, obj):
         request = self.context.get("request")
         return request.build_absolute_uri(obj.vid.url) if obj.vid else None
+    
+    def get_image(self, obj):  # Define this method
+        request = self.context.get("request")
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
+    
     class Meta:
         model = Video
         fields = '__all__'
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        serializer = UserSerializerWithToken(self.user).data
+
+        for [k, v] in serializer.items():
+            data[k] = v
+
+        print("Login Response Data:", data)  # Debugging line
+        return data
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
