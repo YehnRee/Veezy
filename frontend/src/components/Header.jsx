@@ -26,7 +26,7 @@ function Header() {
             bg="primary" 
             variant="dark" 
             collapseOnSelect 
-            className={`navbar-transition ${showNavbar ? "navbar-visible" : "navbar-hidden"}`}
+            className={`navbar-transition ${showNavbar ? "navbar-visible" : "navbar-hidden"} position-relative`}
         >
             <Container>
                 <Navbar.Brand href="/">
