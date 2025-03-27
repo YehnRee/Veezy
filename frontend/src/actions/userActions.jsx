@@ -26,7 +26,7 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
         const {data} = await axios.post(
-            '/users/login/',
+            '/api/users/login/',
             {'username': email, 'password': password},
             config
         )
@@ -67,7 +67,7 @@ export const register = (name, email, password) => async (dispatch) => {
         };
     
         const { data } = await axios.post(
-            "/users/register/",
+            "/api/users/register/",
             { name: name, email: email, password: password },
             config
         );
@@ -107,7 +107,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`,
             },
         };
-        const { data } = await axios.get(`/users/${id}/`, config);
+        const { data } = await axios.get(`api/users/${id}/`, config);
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload: data,
@@ -135,7 +135,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(`/users/profile/update/`, user, config);
+        const { data } = await axios.put(`api/users/profile/update/`, user, config);
 
         dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data }); // Update logged-in user info

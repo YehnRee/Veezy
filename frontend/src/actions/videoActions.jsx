@@ -8,13 +8,16 @@ import {
     VIDEO_UPDATE_FAIL,
     VIDEO_DELETE_REQUEST,
     VIDEO_DELETE_SUCCESS,
-    VIDEO_DELETE_FAIL
+    VIDEO_DELETE_FAIL,
+    VIDEO_LIST_MY_REQUEST, 
+    VIDEO_LIST_MY_SUCCESS, 
+    VIDEO_LIST_MY_FAIL 
 } from '../constants/videoConstants'
 
 export const listVideos = () => async (dispatch) => {
     try {
         dispatch({ type: VIDEO_LIST_REQUEST })
-        const {data} = await axios.get('/videos/')
+        const {data} = await axios.get('/api/videos/')
         dispatch({
             type: VIDEO_LIST_SUCCESS,
             payload: data
@@ -43,7 +46,7 @@ export const updateVideo = (id, formData) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`/videos/${id}/update/`, formData, config);
+        const { data } = await axios.put(`/api/videos/${id}/update/`, formData, config);
 
         dispatch({ type: VIDEO_UPDATE_SUCCESS, payload: data });
 
@@ -67,7 +70,7 @@ export const deleteVideo = (id) => async (dispatch, getState) => {
             }
         };
 
-        await axios.delete(`/videos/${id}/delete/`, config);
+        await axios.delete(`/api/videos/${id}/delete/`, config);
 
         dispatch({ type: VIDEO_DELETE_SUCCESS });
 
@@ -75,6 +78,32 @@ export const deleteVideo = (id) => async (dispatch, getState) => {
         dispatch({
             type: VIDEO_DELETE_FAIL,
             payload: error.response?.data?.detail || error.message
+        });
+    }
+};
+
+export const listMyVideos = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: VIDEO_LIST_MY_REQUEST });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`, // Send token for authentication
+            },
+        };
+
+        const { data } = await axios.get('/api/videos/myvideos/', config); // Call new endpoint
+
+        dispatch({ type: VIDEO_LIST_MY_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: VIDEO_LIST_MY_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
         });
     }
 };

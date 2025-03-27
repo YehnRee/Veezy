@@ -19,7 +19,7 @@ function VideoScreen() {
         async function fetchVideo() {
             try {
                 setLoading(true);
-                const { data } = await axios.get(`/videos/${id}/`);
+                const { data } = await axios.get(`/api/videos/${id}/`);
                 setVideo(data);
             } catch (error) {
                 setError('Failed to load video');
@@ -34,7 +34,7 @@ function VideoScreen() {
         if (window.confirm('Are you sure you want to delete this video?')) {
             try {
                 setDeleting(true);
-                await axios.delete(`/videos/${id}/delete/`, {
+                await axios.delete(`/api/videos/${id}/delete/`, {
                     headers: { Authorization: `Bearer ${userInfo.token}` },
                 });
                 navigate('/'); // ✅ Redirect after deletion

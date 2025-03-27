@@ -7,7 +7,10 @@ import {
     VIDEO_UPDATE_FAIL,
     VIDEO_DELETE_REQUEST,
     VIDEO_DELETE_SUCCESS,
-    VIDEO_DELETE_FAIL
+    VIDEO_DELETE_FAIL,
+    VIDEO_LIST_MY_REQUEST, 
+    VIDEO_LIST_MY_SUCCESS, 
+    VIDEO_LIST_MY_FAIL 
 } from '../constants/videoConstants'
 
 export const videoListReducer = (state={videos: []}, action) => {
@@ -43,6 +46,19 @@ export const videoDeleteReducer = (state = {}, action) => {
         case VIDEO_DELETE_SUCCESS:
             return { loading: false, success: true };
         case VIDEO_DELETE_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const myVideosReducer = (state = { videos: [] }, action) => {
+    switch (action.type) {
+        case VIDEO_LIST_MY_REQUEST:
+            return { loading: true, videos: [] };
+        case VIDEO_LIST_MY_SUCCESS:
+            return { loading: false, videos: action.payload };
+        case VIDEO_LIST_MY_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;

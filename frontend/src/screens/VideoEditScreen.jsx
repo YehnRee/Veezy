@@ -20,7 +20,7 @@ function VideoEditScreen() {
         async function fetchVideo() {
             try {
                 setLoading(true);
-                const { data } = await axios.get(`/videos/${id}/`);
+                const { data } = await axios.get(`/api/videos/${id}/`);
                 
                 // Ensure only the owner can edit
                 if (userInfo.username !== data.user) {
@@ -45,7 +45,7 @@ function VideoEditScreen() {
         try {
             setUpdating(true);
             await axios.put(
-                `/videos/${id}/update/`,
+                `/api/videos/${id}/update/`,
                 { name, description, vid },
                 { headers: { Authorization: `Bearer ${userInfo.token}` } }
             );

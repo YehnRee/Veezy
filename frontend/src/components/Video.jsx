@@ -1,12 +1,16 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-function Video({video}) {
+function Video({ video }) {
     return (
-        <Card className="video-card my-3 p-3 rounded">
+        <Card className="video-card my-3 p-3 rounded" style={{ minHeight: '350px', maxHeight: '500px' }}>
             <Link to={`/videos/${video._id}`}>
-                <Card.Img variant="top" src={video.image} style={{ height: '100%', objectFit: 'cover' }} />
+                <Card.Img 
+                    variant="top" 
+                    src={video.image} 
+                    style={{ height: '200px', objectFit: 'cover' }} 
+                />
             </Link>
 
             <Card.Body>
@@ -18,7 +22,7 @@ function Video({video}) {
                     <strong>{video.user}</strong>
                 </Card.Title>
 
-                <Card.Text as="div">
+                <Card.Text as="div" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {video.description}
                 </Card.Text>
             </Card.Body>
@@ -26,4 +30,4 @@ function Video({video}) {
     );
 }
 
-export default Video
+export default Video;

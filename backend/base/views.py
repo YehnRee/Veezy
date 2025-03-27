@@ -44,6 +44,14 @@ def getVideo(request, pk):
     video = Video.objects.get(_id=pk)
     serializer = VideoSerializer(video, many=False, context={'request': request})  # ✅ Pass request context
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyVideos(request):
+    user = request.user
+    videos = Video.objects.filter(user=user)  # Fetch only the logged-in user's videos
+    serializer = VideoSerializer(videos, many=True, context={'request': request})
+    return Response(serializer.data)
     
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

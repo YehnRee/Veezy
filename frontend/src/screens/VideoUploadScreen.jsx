@@ -37,7 +37,7 @@ const VideoUploadScreen = () => {
         if (video) formData.append('vid', video);
 
         try {
-            await axios.post('/videos/upload/', formData, {
+            await axios.post('/api/videos/upload/', formData, {
                 headers: { 
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}` // ✅ Ensure token is sent
