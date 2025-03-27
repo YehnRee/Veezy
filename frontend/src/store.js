@@ -7,8 +7,8 @@ const reducer = combineReducers({
     videoList: videoListReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
-    userUpdateProfile: userUpdateProfileReducer,
-    userDetails: userDetailsReducer
+    userDetails: userDetailsReducer,
+    userUpdateProfile: userUpdateProfileReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?

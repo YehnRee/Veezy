@@ -91,11 +91,11 @@ def updateUserProfile(request):
     user = request.user
     serializer = UserSerializerWithToken(user, many=False)
     data = request.data
-    user.first_name = data['name']
-    user.username = data['username']
-    user.email = data['email']
-    
-    if data['password'] != '':
+    user.first_name = data.get('name', user.first_name)
+    user.username = data.get('username', user.username)
+    user.email = data.get('email', user.email)
+
+    if data.get('password'):
         user.password = make_password(data['password'])
     user.save()
     return Response(serializer.data)
