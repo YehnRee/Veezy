@@ -89,16 +89,22 @@ def getUserProfile(request):
 @permission_classes([IsAuthenticated])
 def updateUserProfile(request):
     user = request.user
-    serializer = UserSerializerWithToken(user, many=False)
     data = request.data
+
     user.first_name = data.get('name', user.first_name)
     user.username = data.get('username', user.username)
     user.email = data.get('email', user.email)
 
     if data.get('password'):
         user.password = make_password(data['password'])
+
+    if 'isAdmin' in data:
+        user.is_staff = data['isAdmin']  # Allow updating admin status
+
     user.save()
+    serializer = UserSerializerWithToken(user, many=False)
     return Response(serializer.data)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

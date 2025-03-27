@@ -10,9 +10,9 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfileScreen from "./screens/ProfileScreen";
 import VideoUploadScreen from "./screens/VideoUploadScreen";
-import SubscriptionScreen from "./screens/SubscriptionScreen";
 import VideoEditScreen from "./screens/VideoEditScreen";
 import SubscriberRoute from "./components/SubscriberRoute";
+import SubscriptionScreen from "./screens/SubscriptionScreen";
 
 function App() {
   return (
@@ -38,13 +38,13 @@ function AppContent() {
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<HomeScreen />} exact />
-              
+              <Route path="/subscription" element={<SubscriptionScreen />} />
+              <Route path="/profile" element={<ProfileScreen />} />
+
               {/* Wrap each route individually in SubscriberRoute */}
               <Route path="/videos/:id" element={<SubscriberRoute><VideoScreen /></SubscriberRoute>} />
-              <Route path="/profile" element={<SubscriberRoute><ProfileScreen /></SubscriberRoute>} />
               <Route path="/upload-video" element={<SubscriberRoute><VideoUploadScreen /></SubscriberRoute>} />
               <Route path="/videos/edit/:id/" element={<SubscriberRoute><VideoEditScreen /></SubscriberRoute>} />
-              {/* <Route path="/subscription" element={<SubscriptionScreen />} /> */}
             </Route>
           </Routes>
         </Container>

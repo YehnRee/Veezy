@@ -15,7 +15,7 @@ function SubscriberRoute({ children }) {
 
     const handleClose = () => {
         setShowModal(false);
-        navigate("/subscribe");  // Redirect to subscription page
+        navigate("/subscription");  // Redirect to subscription page
     };
 
     return (

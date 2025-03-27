@@ -1,60 +1,61 @@
-import React from "react";
-import { Button, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-// import { setUserInfo } from "../actions/userActions";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { updateUserProfile } from "../actions/userActions"; 
+import { useNavigate } from "react-router-dom";
+import { Card, Button, Container, Spinner } from "react-bootstrap";
 
-const PaymentScreen = () => {
-    const navigate = useNavigate();
+const SubscriptionScreen = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { userInfo } = useSelector((state) => state.userLogin);
+    const [{ isPending }] = usePayPalScriptReducer();
 
-    const handlePayment = async () => {
-        try {
-            // Simulate payment process
-            alert("Payment successful! You now have access to the site.");
-
-            // Update user role to IsAdmin
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${userInfo.token}`,
-                },
-            };
-
-            const { data } = await axios.put(
-                "/users/update-role/",
-                { isAdmin: true },
-                config
-            );
-
-            // Update Redux store
-            // dispatch(setUserInfo(data));
-
-            navigate("/home"); // Redirect to home page after payment
-        } catch (error) {
-            console.error("Error updating user role", error);
-            alert("An error occurred while updating your access. Please try again.");
+    // Redirect if already an admin
+    useEffect(() => {
+        if (userInfo?.isAdmin) {
+            navigate("/");
         }
+    }, [userInfo, navigate]);
+
+    const handleApprove = async (data, actions) => {
+        return actions.order.capture().then(() => {
+            const updatedUser = { ...userInfo, isAdmin: true };
+            dispatch(updateUserProfile(updatedUser)); // Update Redux state
+            localStorage.setItem("userInfo", JSON.stringify(updatedUser)); // Persist in localStorage
+            navigate("/"); // Redirect to homepage
+        });
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
-            <Card className="p-4" style={{ width: "400px" }}>
-                <h2 className="text-center">One-Time Access Payment</h2>
-                <p className="text-center">Pay once and enjoy full access to the site.</p>
-                <h4 className="text-center mb-4">$19.99</h4>
+        <Container className="d-flex justify-content-center align-items-center vh-100">
+            <Card className="p-4 text-center shadow" style={{ width: "400px" }}>
+                <h2 className="mb-3">Subscribe for Full Access</h2>
+                <p className="text-muted">Pay once to unlock all content.</p>
+
+                {isPending ? (
+                    <Spinner animation="border" variant="primary" />
+                ) : (
+                    <PayPalButtons
+                        createOrder={(data, actions) => {
+                            return actions.order.create({
+                                purchase_units: [{ amount: { value: "49.99" } }],
+                            });
+                        }}
+                        onApprove={handleApprove}
+                    />
+                )}
+
                 <Button 
-                    className="w-100" 
-                    variant="success" 
-                    onClick={handlePayment}
+                    variant="secondary" 
+                    className="mt-3"
+                    onClick={() => navigate("/")}
                 >
-                    Proceed to Payment
+                    Cancel
                 </Button>
             </Card>
-        </div>
+        </Container>
     );
 };
 
-export default PaymentScreen;
+export default SubscriptionScreen;

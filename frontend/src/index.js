@@ -6,11 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import './bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from './store';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <PayPalScriptProvider options={{ "client-id": "ARkAc098LPd9AcSv8JdBMCV1V2i9SlzeFH9PsQz0dOpQhzi8Tt0BdBfUlIajhicmUuZhhkcKYRuL4dGq", currency: "USD" }}>
+      <App />
+    </PayPalScriptProvider>
   </Provider>
 );
 

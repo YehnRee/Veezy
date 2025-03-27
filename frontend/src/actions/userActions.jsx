@@ -125,31 +125,26 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
 export const updateUserProfile = (user) => async (dispatch, getState) => {
     try {
-        dispatch({
-            type: USER_UPDATE_PROFILE_REQUEST,
-        });
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
+
+        const { userLogin: { userInfo } } = getState();
         const config = {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${userInfo.token}`,
             },
         };
-        const { data } = await axios.put(`/users/profile/update`, user, config);
-        dispatch({
-            type: USER_UPDATE_PROFILE_SUCCESS,
-            payload: data,
-        });
-        localStorage.setItem("userInfo", JSON.stringify(data));
+
+        const { data } = await axios.put(`/users/profile/update/`, user, config);
+
+        dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data }); // Update logged-in user info
+
+        localStorage.setItem("userInfo", JSON.stringify(data)); // Update local storage
     } catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
+            payload: error.response?.data.message || error.message,
         });
     }
 };
