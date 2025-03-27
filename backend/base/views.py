@@ -116,3 +116,31 @@ def uploadVideo(request):
 
     serializer = VideoSerializer(video, context={'request': request})
     return Response(serializer.data, status=201)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateVideo(request, pk):
+    video = get_object_or_404(Video, _id=pk)
+
+    # Ensure only the owner can update
+    if video.user != request.user:
+        return Response({'detail': 'Not authorized to update this video'}, status=403)
+
+    data = request.data
+    video.name = data['name']
+    video.description = data['description']
+    video.save()
+
+    return Response(VideoSerializer(video).data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deleteVideo(request, pk):
+    video = get_object_or_404(Video, _id=pk)
+
+    # Ensure only the owner can delete
+    if video.user != request.user:
+        return Response({'detail': 'Not authorized to delete this video'}, status=403)
+
+    video.delete()
+    return Response({'detail': 'Video deleted successfully'})

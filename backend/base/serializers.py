@@ -11,11 +11,16 @@ class VideoSerializer(serializers.ModelSerializer):
 
     def get_vid(self, obj):
         request = self.context.get("request")
-        return request.build_absolute_uri(obj.vid.url) if obj.vid else None
+        if request and obj.vid:
+            return request.build_absolute_uri(obj.vid.url)
+        return None
+
     
-    def get_image(self, obj):  # Define this method
+    def get_image(self, obj):
         request = self.context.get("request")
-        return request.build_absolute_uri(obj.image.url) if obj.image else None
+        if request and obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
     
     class Meta:
         model = Video

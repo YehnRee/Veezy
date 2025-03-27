@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProfileScreen from "./screens/ProfileScreen";
 import VideoUploadScreen from "./screens/VideoUploadScreen";
 import SubscriptionScreen from "./screens/SubscriptionScreen";
+import VideoEditScreen from "./screens/VideoEditScreen";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function AppContent() {
               <Route path="/videos/:id" element={<VideoScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/upload-video" element={<VideoUploadScreen />} />
+              <Route path="/videos/edit/:id/" element={<VideoEditScreen />} />
               {/* <Route path="/subscription" element={<SubscriptionScreen />} /> */}
             </Route>
           </Routes>
