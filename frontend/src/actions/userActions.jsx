@@ -30,6 +30,9 @@ export const login = (email, password) => async (dispatch) => {
             {'username': email, 'password': password},
             config
         )
+
+        console.log("Login API Response:", data);  // Debugging
+        
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data,

@@ -21,7 +21,8 @@ const VideoUploadScreen = () => {
         setError(null);
         setSuccess(false);
 
-        const token = localStorage.getItem('token'); // Get auth token from local storage
+        const userInfo = localStorage.getItem('userInfo');
+        const token = userInfo ? JSON.parse(userInfo).token : null;
 
         if (!token) {
             setError('You must be logged in to upload a video.');
@@ -39,11 +40,17 @@ const VideoUploadScreen = () => {
             await axios.post('/videos/upload/', formData, {
                 headers: { 
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}` // Include auth token
+                    'Authorization': `Bearer ${token}` // ✅ Ensure token is sent
                 }
             });
+
             setSuccess(true);
+            setTitle('');
+            setDescription('');
+            setImage(null);
+            setVideo(null);
         } catch (error) {
+            console.error(error.response?.data); // ✅ Log error for debugging
             setError(error.response?.data?.detail || 'Failed to upload video. Please try again.');
         } finally {
             setUploading(false);

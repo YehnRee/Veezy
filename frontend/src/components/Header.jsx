@@ -47,12 +47,17 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/subscription">
-                            <i className="fa-solid fa-dollar-sign"></i> Subscription
-                        </Nav.Link>
-                        <Nav.Link as={Link} to="/upload-video">
-                            <i className="fa-solid fa-play"></i> Upload
-                        </Nav.Link>
+                        {userInfo ? (
+                            userInfo.isAdmin ? (
+                                <Nav.Link as={Link} to="/upload-video">
+                                    <i className="fa-solid fa-play"></i> Upload
+                                </Nav.Link>
+                            ) : (
+                                <Nav.Link as={Link} to="/subscription">
+                                    <i className="fa-solid fa-dollar-sign"></i> Subscription
+                                </Nav.Link>
+                            )
+                        ) : null}
 
                         {userInfo ? (
                             <NavDropdown title={userInfo.name} id="username" align="end">

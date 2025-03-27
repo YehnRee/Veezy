@@ -68,7 +68,7 @@ def registerUser(request):
     try:
         user = User.objects.create(
             first_name = data['name'],
-            username = data['email'],
+            username = data['name'],
             email = data['email'],
             password = make_password(data['password'])
         )
@@ -103,8 +103,16 @@ def updateUserProfile(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def uploadVideo(request):
-    serializer = VideoSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(user=request.user)  # Assuming user is authenticated
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    user = request.user
+    data = request.data
+
+    video = Video.objects.create(
+        user=user,
+        name=data['name'],
+        description=data.get('description', ''),
+        vid=request.FILES.get('vid'),
+        image=request.FILES.get('image', None),
+    )
+
+    serializer = VideoSerializer(video, context={'request': request})
+    return Response(serializer.data, status=201)
