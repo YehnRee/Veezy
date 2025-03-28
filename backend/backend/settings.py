@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-)2fl70eyqcfjktbn&v(7j3y0ctck#7^8&n)7v0mi-8zc6k-@q@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['veezy-backend.onrender.com']
+ALLOWED_HOSTS = ['veezy.onrender.com']
 
 
 # Application definition
