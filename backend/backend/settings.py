@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-)2fl70eyqcfjktbn&v(7j3y0ctck#7^8&n)7v0mi-8zc6k-@q@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['veezy-backend.onrender.com']
 
 
 # Application definition
@@ -56,6 +56,10 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://your-frontend.vercel.app"
+]
 
 ROOT_URLCONF = 'backend.urls'
 
