@@ -59,11 +59,11 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://veezy.vercel.app/"
+    "https://veezy.vercel.app"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://veezy.vercel.app/",
+    "https://veezy.vercel.app",
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -133,7 +133,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [ BASE_DIR / "static_my_project" ]
+STATICFILES_DIRS = []
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 
