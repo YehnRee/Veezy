@@ -15,6 +15,8 @@ import {
     USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants"
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const login = (email, password) => async (dispatch) => {
     try{
         dispatch({
@@ -26,7 +28,7 @@ export const login = (email, password) => async (dispatch) => {
             }
         }
         const {data} = await axios.post(
-            '/api/users/login/',
+            `${apiUrl}/api/users/login/`,
             {'username': email, 'password': password},
             config
         )
@@ -67,7 +69,7 @@ export const register = (name, email, password) => async (dispatch) => {
         };
     
         const { data } = await axios.post(
-            "/api/users/register/",
+            `${apiUrl}/api/users/register/`,
             { name: name, email: email, password: password },
             config
         );
@@ -107,7 +109,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.token}`,
             },
         };
-        const { data } = await axios.get(`api/users/${id}/`, config);
+        const { data } = await axios.get(`${apiUrl}/api/users/${id}/`, config);
         dispatch({
             type: USER_DETAILS_SUCCESS,
             payload: data,
@@ -135,7 +137,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(`api/users/profile/update/`, user, config);
+        const { data } = await axios.put(`${apiUrl}/api/users/profile/update/`, user, config);
 
         dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data }); // Update logged-in user info

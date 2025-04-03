@@ -15,11 +15,13 @@ function VideoScreen() {
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}; // ✅ Get logged-in user
 
+    const apiUrl = process.env.REACT_APP_API_URL
+
     useEffect(() => {
         async function fetchVideo() {
             try {
                 setLoading(true);
-                const { data } = await axios.get(`/api/videos/${id}/`);
+                const { data } = await axios.get(`${apiUrl}/api/videos/${id}/`);
                 setVideo(data);
             } catch (error) {
                 setError('Failed to load video');
@@ -34,7 +36,7 @@ function VideoScreen() {
         if (window.confirm('Are you sure you want to delete this video?')) {
             try {
                 setDeleting(true);
-                await axios.delete(`/api/videos/${id}/delete/`, {
+                await axios.delete(`${apiUrl}/api/videos/${id}/delete/`, {
                     headers: { Authorization: `Bearer ${userInfo.token}` },
                 });
                 navigate('/'); // ✅ Redirect after deletion

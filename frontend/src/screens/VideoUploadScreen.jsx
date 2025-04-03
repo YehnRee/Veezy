@@ -24,6 +24,8 @@ const VideoUploadScreen = () => {
         const userInfo = localStorage.getItem('userInfo');
         const token = userInfo ? JSON.parse(userInfo).token : null;
 
+        const apiUrl = process.env.REACT_APP_API_URL
+
         if (!token) {
             setError('You must be logged in to upload a video.');
             setUploading(false);
@@ -37,7 +39,7 @@ const VideoUploadScreen = () => {
         if (video) formData.append('vid', video);
 
         try {
-            await axios.post('/api/videos/upload/', formData, {
+            await axios.post(`${apiUrl}/api/videos/upload/`, formData, {
                 headers: { 
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}` // ✅ Ensure token is sent

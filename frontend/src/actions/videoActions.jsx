@@ -14,10 +14,12 @@ import {
     VIDEO_LIST_MY_FAIL 
 } from '../constants/videoConstants'
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const listVideos = () => async (dispatch) => {
     try {
         dispatch({ type: VIDEO_LIST_REQUEST })
-        const {data} = await axios.get('/api/videos/')
+        const {data} = await axios.get(`${apiUrl}/api/videos/`)
         dispatch({
             type: VIDEO_LIST_SUCCESS,
             payload: data
@@ -46,7 +48,7 @@ export const updateVideo = (id, formData) => async (dispatch, getState) => {
             }
         };
 
-        const { data } = await axios.put(`/api/videos/${id}/update/`, formData, config);
+        const { data } = await axios.put(`${apiUrl}/api/videos/${id}/update/`, formData, config);
 
         dispatch({ type: VIDEO_UPDATE_SUCCESS, payload: data });
 
@@ -70,7 +72,7 @@ export const deleteVideo = (id) => async (dispatch, getState) => {
             }
         };
 
-        await axios.delete(`/api/videos/${id}/delete/`, config);
+        await axios.delete(`${apiUrl}/api/videos/${id}/delete/`, config);
 
         dispatch({ type: VIDEO_DELETE_SUCCESS });
 
@@ -95,7 +97,7 @@ export const listMyVideos = () => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.get('/api/videos/myvideos/', config); // Call new endpoint
+        const { data } = await axios.get(`${apiUrl}/api/videos/myvideos/`, config); // Call new endpoint
 
         dispatch({ type: VIDEO_LIST_MY_SUCCESS, payload: data });
     } catch (error) {

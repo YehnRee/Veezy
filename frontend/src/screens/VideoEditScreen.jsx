@@ -16,11 +16,13 @@ function VideoEditScreen() {
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
 
+    const apiUrl = process.env.REACT_APP_API_URL
+
     useEffect(() => {
         async function fetchVideo() {
             try {
                 setLoading(true);
-                const { data } = await axios.get(`/api/videos/${id}/`);
+                const { data } = await axios.get(`${apiUrl}/api/videos/${id}/`);
                 
                 // Ensure only the owner can edit
                 if (userInfo.username !== data.user) {
@@ -45,7 +47,7 @@ function VideoEditScreen() {
         try {
             setUpdating(true);
             await axios.put(
-                `/api/videos/${id}/update/`,
+                `${apiUrl}/api/videos/${id}/update/`,
                 { name, description, vid },
                 { headers: { Authorization: `Bearer ${userInfo.token}` } }
             );
