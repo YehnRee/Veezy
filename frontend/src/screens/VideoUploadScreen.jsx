@@ -24,7 +24,7 @@ const VideoUploadScreen = () => {
         const userInfo = localStorage.getItem('userInfo');
         const token = userInfo ? JSON.parse(userInfo).token : null;
 
-        const apiUrl = process.env.REACT_APP_API_URL
+        const apiUrl = process.env.REACT_APP_BACKEND_URL
 
         if (!token) {
             setError('You must be logged in to upload a video.');

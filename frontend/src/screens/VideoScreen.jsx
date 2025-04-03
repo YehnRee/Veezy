@@ -15,7 +15,7 @@ function VideoScreen() {
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {}; // ✅ Get logged-in user
 
-    const apiUrl = process.env.REACT_APP_API_URL
+    const apiUrl = process.env.REACT_APP_BACKEND_URL
 
     useEffect(() => {
         async function fetchVideo() {

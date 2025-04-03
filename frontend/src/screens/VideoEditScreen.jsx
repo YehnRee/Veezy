@@ -16,7 +16,7 @@ function VideoEditScreen() {
 
     const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
 
-    const apiUrl = process.env.REACT_APP_API_URL
+    const apiUrl = process.env.REACT_APP_BACKEND_URL
 
     useEffect(() => {
         async function fetchVideo() {

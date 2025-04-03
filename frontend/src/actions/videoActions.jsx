@@ -14,7 +14,7 @@ import {
     VIDEO_LIST_MY_FAIL 
 } from '../constants/videoConstants'
 
-const apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = process.env.REACT_APP_BACKEND_URL
 
 export const listVideos = () => async (dispatch) => {
     try {

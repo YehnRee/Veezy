@@ -15,7 +15,7 @@ import {
     USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants"
 
-const apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = process.env.REACT_APP_BACKEND_URL
 
 export const login = (email, password) => async (dispatch) => {
     try{
