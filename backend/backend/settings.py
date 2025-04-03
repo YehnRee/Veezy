@@ -59,7 +59,11 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://your-frontend.vercel.app"
+    "https://veezy.vercel.app/"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://veezy.vercel.app/",
 ]
 
 ROOT_URLCONF = 'backend.urls'
